@@ -1,0 +1,15 @@
+SELECT
+    m.id
+{% if true == user  %}
+    , u.name as user_name
+{% endif %}
+
+FROM media as m
+
+    {% if true == user  %}
+        INNER JOIN user as u ON m.user_id = u.id
+    {% endif %}
+
+WHERE m.id in (:ids)
+
+ORDER BY m.id

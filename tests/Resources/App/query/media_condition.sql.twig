@@ -1,0 +1,7 @@
+SELECT
+    id
+    {% if true == title %}
+    , title
+    {% endif %}
+FROM media
+WHERE id= :id
