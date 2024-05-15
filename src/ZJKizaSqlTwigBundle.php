@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zjk\SqlTwig;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

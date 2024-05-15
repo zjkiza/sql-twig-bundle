@@ -16,6 +16,7 @@ final class ExceptionTest extends KernelTestCase
     {
         parent::setUp();
 
+        /** @psalm-suppress PropertyTypeCoercion */
         $this->manager = $this->getContainer()->get(SqlTwigInterface::class);
     }
 

@@ -15,7 +15,7 @@ use Zjk\SqlTwig\Exception\LoaderErrorException;
 use Zjk\SqlTwig\Exception\RuntimeException;
 use Zjk\SqlTwig\Exception\SyntaxErrorException;
 
-class SqlTwig implements SqlTwigInterface
+final class SqlTwig implements SqlTwigInterface
 {
     private Environment $environment;
 

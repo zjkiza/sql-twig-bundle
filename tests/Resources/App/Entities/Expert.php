@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zjk\SqlTwig\Tests\Resources\App\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
