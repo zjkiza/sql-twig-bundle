@@ -9,6 +9,7 @@ queries using Twig syntax.
 - You place queries in separate files. (Ex: all_media.sql.twig).
 - Execute your queries using `Zjk\SqlTwig\Contract\SqlTwigInterface` service.
 - Result of execution `Zjk\SqlTwig\Contract\SqlTwigInterface->executeQuery(..)` is instance of Doctrine\DBAL\Driver\Result, use their methods to get results.
+- Query execution via transaction `Zjk\SqlTwig\Contract\SqlTwigInterface->transaction(..)`
 
 # Installation
 
@@ -93,7 +94,18 @@ class MyRepository {
                ],[
                  'ids' => ArrayParameterType::STRING,
               ])->fetchAllAssociative()
-    }    
+    }
+    
+    public function withTransaction(): array
+    {
+        $result = $this->manager->transaction(
+            static fn (SqlTwigInterface $manager): Result => $manager->executeQuery('@query/media_id_title.sql.twig'),
+            TransactionIsolationLevel::READ_UNCOMMITTED
+        );
+        
+        return $result->fetchAllAssociative();
+    }
+        
 }
 
 ```
