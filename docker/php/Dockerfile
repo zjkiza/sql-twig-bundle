@@ -1,10 +1,9 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
 RUN apt-get update --fix-missing
 RUN apt-get update && apt-get install -y \
     curl \
     gettext \
-    git \
     openssl \
     openssh-client \
     zip \
@@ -27,11 +26,11 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
-RUN docker-php-ext-install bcmath exif gd gettext pdo pdo_mysql mysqli zip opcache soap simplexml pcntl intl xsl
+RUN docker-php-ext-install bcmath exif gd gettext pdo pdo_mysql mysqli zip soap simplexml pcntl intl xsl
 
 RUN pecl install apcu && docker-php-ext-enable apcu
 
-RUN pecl install xdebug-3.2.2
+RUN pecl install xdebug
 
 #   Setup Composer
 

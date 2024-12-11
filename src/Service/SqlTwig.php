@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Zjk\SqlTwig\Service;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\TransactionIsolationLevel;
+use Doctrine\DBAL\Types\Type;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -19,17 +22,13 @@ use Zjk\SqlTwig\Exception\RuntimeException;
 use Zjk\SqlTwig\Exception\SyntaxErrorException;
 
 /**
+ *  @psalm-type WrapperParameterType = string|Type|ParameterType|ArrayParameterType
+ *  @psalm-type WrapperParameterTypeArray = array<int<0, max>, WrapperParameterType>|array<string, WrapperParameterType>
+ *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 final class SqlTwig implements SqlTwigInterface
 {
-    private const TRANSACTION_ISOLATION_LEVEL = [
-        TransactionIsolationLevel::READ_UNCOMMITTED,
-        TransactionIsolationLevel::READ_COMMITTED,
-        TransactionIsolationLevel::REPEATABLE_READ,
-        TransactionIsolationLevel::SERIALIZABLE,
-    ];
-
     public function __construct(
         private readonly Environment $environment,
         private readonly Connection $connection,
@@ -38,7 +37,7 @@ final class SqlTwig implements SqlTwigInterface
     }
 
     /**
-     * @throws RuntimeException
+     * @inheritDoc
      */
     public function executeQuery(string $queryPath, array $args = [], array $types = [], ?QueryCacheProfile $qcp = null): Result
     {
@@ -57,10 +56,8 @@ final class SqlTwig implements SqlTwigInterface
     /**
      * @throws RuntimeException
      */
-    public function transaction(\Closure $func, int $transactionIsolationLevel = TransactionIsolationLevel::READ_COMMITTED): ?Result
+    public function transaction(\Closure $func, TransactionIsolationLevel $transactionIsolationLevel = TransactionIsolationLevel::READ_COMMITTED): ?Result
     {
-        $this->validationTransactionIsolationLevel($transactionIsolationLevel);
-
         try {
             return $this->dbalTransaction($func, $transactionIsolationLevel);
         } catch (Exception $exception) {
@@ -69,12 +66,10 @@ final class SqlTwig implements SqlTwigInterface
     }
 
     /**
-     * @param TransactionIsolationLevel::* $transactionIsolationLevel
-     *
      * @throws Exception
      * @throws RuntimeException
      */
-    private function dbalTransaction(\Closure $func, int $transactionIsolationLevel): ?Result
+    private function dbalTransaction(\Closure $func, TransactionIsolationLevel $transactionIsolationLevel): ?Result
     {
         $previousIsolationLevel = $this->connection->getTransactionIsolation();
 
@@ -111,19 +106,6 @@ final class SqlTwig implements SqlTwigInterface
             throw SyntaxErrorException::formatted(\sprintf('Query source %s contains Twig syntax error. ', $queryPath), $exception->getMessage(), $this->isDebug);
         } catch (\Exception $exception) {
             throw RuntimeException::formatted(\sprintf('Query source %s contains unknown exception occurred. ', $queryPath), $exception->getMessage(), $this->isDebug);
-        }
-    }
-
-    /**
-     * @param TransactionIsolationLevel::* $transactionIsolationLevel
-     *
-     * @throws RuntimeException
-     */
-    private function validationTransactionIsolationLevel(int $transactionIsolationLevel): void
-    {
-        /** @psalm-suppress DocblockTypeContradiction */
-        if (!\in_array($transactionIsolationLevel, self::TRANSACTION_ISOLATION_LEVEL, true)) {
-            throw new RuntimeException('Transaction isolation level it\'s out the allowed range [1-4].', 422);
         }
     }
 }

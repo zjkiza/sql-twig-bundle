@@ -9,3 +9,4 @@
 composer.lock
 .env
 /tests/Resources/var/*
+/bin/.

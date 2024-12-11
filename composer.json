@@ -52,6 +52,7 @@
     },
     "scripts": {
         "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit --testdox --coverage-html ./build/phpunit",
+        "phpunit-ci": "vendor/bin/phpunit --testdox",
         "phpstan": "vendor/bin/phpstan analyse -v",
         "psalm": "vendor/bin/psalm --threads=8 --no-diff --no-cache",
         "rector": "vendor/bin/rector",
