@@ -3,7 +3,6 @@
 
 /.idea
 /var
-/bin
 /build
 /vendor
 composer.lock
