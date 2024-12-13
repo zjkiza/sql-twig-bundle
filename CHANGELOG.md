@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.1]
+Added
+- Optimize code for Continuous Integration in python
+
 ## [0.8.0]
 
 Added

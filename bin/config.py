@@ -1,21 +1,21 @@
-container_php = 'php_bundle_2'
-container_db = 'mysql_bundle_2'
+container_php: str = 'php_bundle_2'
+container_db: str = 'mysql_bundle_2'
 
-waiting_db_connection = True
-phpunit_code_error_bypass = False
+waiting_db_connection: bool = True
+phpunit_code_error_bypass: bool = False
 
-containers = [
+containers: list = [
     container_php,
     container_db
 ]
 
-container_work_dir = '/www'
+container_work_dir: str = '/www'
 
-docker_compose_files_list = [
+docker_compose_files_list: list = [
     'docker-compose.yaml'
 ]
 
-commands = {
+commands: dict = {
     'composer install': 'composer install',
     'composer run phpunit': 'composer run phpunit-ci',
     'composer run phpstan': 'composer run phpstan',
