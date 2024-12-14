@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.1]
+
+Fixed
+- Dependency for older version of Symfony
+
+
 ## [0.9.0]
+
 Fixed
 - support for working with "doctrine/dbal" version 3 and 4 at the same time, due to the change of attribute signature `$transactionIsolationLevel`. 
 

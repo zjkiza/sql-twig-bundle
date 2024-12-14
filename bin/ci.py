@@ -6,7 +6,7 @@ from rich.markdown import Markdown
 import subprocess
 import click
 from utility.docker_manager_factory import create_docker_manager
-from config import container_php, waiting_db_connection, commands, container_work_dir
+from config import container_php, waiting_db_connection, commands, container_work_dir, phpunit_code_error_bypass
 
 
 @click.command()
@@ -15,7 +15,11 @@ from config import container_php, waiting_db_connection, commands, container_wor
 def run(verbose: bool) -> None:
     start = time.time()
 
-    docker_manager = create_docker_manager(verbose=verbose, waiting_db=waiting_db_connection)
+    docker_manager = create_docker_manager(
+        verbose=verbose,
+        waiting_db=waiting_db_connection,
+        unit_code_error_bypass=phpunit_code_error_bypass
+    )
     docker_manager.run_container()
 
     result_of_tests = 0

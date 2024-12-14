@@ -11,11 +11,11 @@ containers: list = [
 
 container_work_dir: str = '/www'
 
-docker_compose_files_list: list = [
+docker_compose_files_list: list[str] = [
     'docker-compose.yaml'
 ]
 
-commands: dict = {
+commands: dict[str, str] = {
     'composer install': 'composer install',
     'composer run phpunit': 'composer run phpunit-ci',
     'composer run phpstan': 'composer run phpstan',
