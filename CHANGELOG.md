@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0]
+Fixed
+- support for working with "doctrine/dbal" version 3 and 4 at the same time, due to the change of attribute signature `$transactionIsolationLevel`. 
+
 ## [0.8.1]
 Added
 - Optimize code for Continuous Integration in python

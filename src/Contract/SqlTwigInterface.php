@@ -24,6 +24,7 @@ interface SqlTwigInterface
 {
     /**
      * @param array<string, mixed> $args
+     *
      * @psalm-param WrapperParameterTypeArray $types
      *
      * @throws ExceptionDriver
@@ -34,5 +35,17 @@ interface SqlTwigInterface
      */
     public function executeQuery(string $queryPath, array $args = [], array $types = [], ?QueryCacheProfile $qcp = null): Result;
 
-    public function transaction(\Closure $func, TransactionIsolationLevel $transactionIsolationLevel = TransactionIsolationLevel::READ_COMMITTED): ?Result;
+    /**
+     * @param int|TransactionIsolationLevel $transactionIsolationLevel
+     *
+     * This parameter supports two types for compatibility with different versions of doctrine/dbal:
+     * - In doctrine/dbal versions < 4, the transaction isolation level is expected to be an integer,
+     * corresponding to predefined constants (e.g., TransactionIsolationLevel::READ_COMMITTED as an int).
+     * - In doctrine/dbal versions >= 4, the transaction isolation level is represented by the
+     * TransactionIsolationLevel class, providing a more type-safe implementation.
+     *
+     * Using `int|TransactionIsolationLevel` ensures this method remains compatible with both older
+     * and newer versions of the library, enabling smooth transitions and backward compatibility.
+     */
+    public function transaction(\Closure $func, int|TransactionIsolationLevel $transactionIsolationLevel = TransactionIsolationLevel::READ_COMMITTED): ?Result;
 }
