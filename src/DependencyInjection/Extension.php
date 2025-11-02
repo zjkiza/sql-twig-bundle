@@ -9,10 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension as SymfonyExtension;
 
-
 /**
  * Notice for symfony 8.1 support you need change Symfony\Component\HttpKernel\DependencyInjection\Extension
- * to  Symfony\Component\DependencyInjection\Extension\Extension
+ * to  Symfony\Component\DependencyInjection\Extension\Extension.
  *
  * TODO : Add support for both, due to old versions
  *

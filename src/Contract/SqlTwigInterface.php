@@ -8,7 +8,6 @@ use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Driver\Exception as ExceptionDriver;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\TransactionIsolationLevel;
 use Doctrine\DBAL\Types\Type;
@@ -48,4 +47,24 @@ interface SqlTwigInterface
      * and newer versions of the library, enabling smooth transitions and backward compatibility.
      */
     public function transaction(\Closure $func, int|TransactionIsolationLevel $transactionIsolationLevel = TransactionIsolationLevel::READ_COMMITTED): ?Result;
+
+    /**
+     * @param array<string, mixed> $args
+     *
+     * @psalm-param WrapperParameterTypeArray $types
+     *
+     * @throws ExceptionDriver
+     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function executeQueryWithTempTable(string $queryPath, array $args = [], array $types = [], ?QueryCacheProfile $qcp = null): Result;
+
+    /**
+     * Registration and creation of a temp table.
+     *
+     * @param array<string, mixed> $context
+     */
+    public function registerTempTable(string $queryPath, array $context = []): void;
 }

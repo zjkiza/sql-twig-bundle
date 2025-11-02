@@ -2,10 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.0]
+
+Added
+- the possibility to create and execute queries with temporary table has been added.
+
 ## [0.9.1]
 
 Fixed
-- Dependency for older version of Symfony
+- Dependency for older version of Symfony.
 
 
 ## [0.9.0]
@@ -15,7 +20,7 @@ Fixed
 
 ## [0.8.1]
 Added
-- Optimize code for Continuous Integration in python
+- Optimize code for Continuous Integration in python.
 
 ## [0.8.0]
 

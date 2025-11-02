@@ -31,7 +31,7 @@ final class ExceptionTest extends KernelTestCase
     public function testExpectExceptionWhenExistTwigSyntaxError(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('The query "@query/twig_syntax_error.sql.twig" cannot be executed. Query source @query/twig_syntax_error.sql.twig contains Twig syntax error. Unknown "ifA" tag. Did you mean "if"?');
+        $this->expectExceptionMessage('Query source @query/twig_syntax_error.sql.twig contains Twig syntax error. Unknown "ifA" tag. Did you mean "if" in "@query/twig_syntax_error.sql.twig" at line 2?');
 
         $this->manager->executeQuery('@query/twig_syntax_error.sql.twig')->fetchAllAssociative();
     }
@@ -39,7 +39,7 @@ final class ExceptionTest extends KernelTestCase
     public function testExpectExceptionWhenVariableNotPassed(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('The query "@query/variable_not_passed.sql.twig" cannot be executed. Query source @query/variable_not_passed.sql.twig contains unknown exception occurred. Variable "title" does not exist.');
+        $this->expectExceptionMessage('The query "@query/variable_not_passed.sql.twig" cannot be executed. Query source @query/variable_not_passed.sql.twig contains unknown exception occurred. Variable "title" does not exist in "@query/variable_not_passed.sql.twig" at line 2.');
 
         $this->manager->executeQuery('@query/variable_not_passed.sql.twig')->fetchAllAssociative();
     }

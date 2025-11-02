@@ -129,4 +129,23 @@ final class ExecuteQueryTest extends KernelTestCase
             ],
         ], $response);
     }
+
+    public function testExecuteQueryWithTempTable(): void
+    {
+        $this->manager->registerTempTable('@query/create_temp_table.sql.twig');
+
+        $response = $this->manager->executeQueryWithTempTable(
+            '@query/execute_with_tmp_table.sql.twig'
+        )->fetchAllAssociative();
+
+        $this->assertSame([
+            [
+                'id' => '87101abb-4e71-427a-a433-5ea7c253e56f',
+            ],
+            [
+                'id' => 'd6dc85b9-58e1-407b-97d4-53af658e1e90',
+            ],
+        ], $response);
+
+    }
 }

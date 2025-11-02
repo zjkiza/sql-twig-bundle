@@ -46,6 +46,7 @@ final class ZJKizaSqlTwigTestKernel extends Kernel
             'test'          => true,
             'property_info' => [
                 'enabled' => true,
+                'with_constructor_extractor' => false,
             ],
         ]);
 
